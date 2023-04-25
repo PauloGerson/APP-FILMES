@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import Home from './src/screens/Home/Home'
+import Details from './src/screens/Details/Details'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <>
+     <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen 
+        name="Home" 
+        component={Home}
+        options={{
+          headerStatusBarHeight: 0, // Defina headerStatusBarHeight como 0 para remover a barra de status branca
+          headerShown: false, // Se você também quiser remover o cabeçalho (header), defina headerShown como false
+        }}
+         />
+        <Stack.Screen 
+        name="Detalhes" 
+        component={Details}
+       
+        options={{
+          headerStatusBarHeight: 0, 
+          headerShown: false, 
+        }}
+         />
+      </Stack.Navigator>
+    </NavigationContainer>
+     
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
