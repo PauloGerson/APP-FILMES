@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
-
-
-
+import { FaAlignCenter, FaSistrix } from "react-icons/fa";
+import { RiSearch2Line } from "react-icons/ri";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -28,10 +27,77 @@ export default function Home() {
     });
   };
 
+  const img = [
+    {
+      imgs: 'https://jovemnerd.com.br/wp-content/uploads/2021/11/Homem-Aranha-01-1-760x1126.png'
+    },
+
+    {
+      imgs: 'https://img.elo7.com.br/product/original/3B2C465/big-poster-filme-velozes-e-furiosos-9-lo002-90x60-cm-presente-geek.jpg'
+    },
+
+    {
+      imgs: 'https://www.themoviedb.org/t/p/original/lGjmEgZFXiTIZVQv1TJkty4mXR2.jpg'
+    },
+
+  ]
+
+  const imgPopular = [
+    {
+      imgs: 'https://popularanime.com.br/wp-content/uploads/2022/09/FdWGS1IUcAAn7rG-768x1086.jpg'
+    },
+
+    {
+      imgs: 'https://poltronanerd.com.br/wp-content/uploads/2022/08/dc-liga-dos-super-pets.jpg'
+    },
+
+    {
+      imgs: 'https://img.elo7.com.br/product/original/430E01A/poster-1-kung-fu-panda-2008-mdf.jpg'
+    },
+
+  ]
+
   return (
     <View style={styles.container}>
+      <View style={styles.navBar}>
+      
+          <FaAlignCenter style={styles.colorIcon}/>
+          <RiSearch2Line style={styles.colorIcon}/>
+        
+      </View>
+      <Text style={styles.TextTitle}>Movie</Text>
+      
+
       <StatusBar style='light'/>
+
+      <Text style={styles.TextDescription}>Filmes em destaque</Text>
+      <ScrollView showsHorizontalScrollIndicator={false} 
+          horizontal={true} style={styles.footerContentScrollView}>
+        <View style={styles.imgCenter}>
+          
+          {img.map(itens => (
+            <Image source={{ uri: itens.imgs}} style={styles.imageScroll} />
+          ))}
+        </View>
+      </ScrollView>
+
+      <Text style={styles.TextDescription}>Popular</Text>
+      <ScrollView showsHorizontalScrollIndicator={false} 
+          horizontal={true} style={styles.footerContentScrollView}>
+        <View style={styles.imgCenter}>
+          
+          {imgPopular.map(itens => (
+            <Image source={{ uri: itens.imgs}} style={styles.imageScroll} />
+          ))}
+        </View>
+      </ScrollView>
+      
+      
       <ScrollView >
+      
+        
+        <View >
+        <Text style={styles.TextDescription}>Lançamentos</Text><br/>
         <View style={styles.content}>
           {movies.map(item => (
             <TouchableOpacity
@@ -48,6 +114,7 @@ export default function Home() {
             </TouchableOpacity>
           ))}
         </View>
+        </View>
       </ScrollView>
       
     </View>
@@ -57,7 +124,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     
-    flexDirection: "row",
+    
     backgroundColor: '#121212',     
   },
 
@@ -66,14 +133,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexWrap: 'wrap',
     marginRight: 9,
-    marginTop: 90, 
+    
     justifyContent: 'space-around',
     
+  },
+  navBar:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+  
   },
   contentImage:{
     width: '40%', 
     marginBottom: 20,
-   
     textAlign: 'center',
   },
 
@@ -84,10 +158,52 @@ const styles = StyleSheet.create({
    
     fontWeight: '600'
   },
+
+  colorIcon: {
+    fontSize: 20,
+    color: 'white',
+    fontWeight: '800'
+
+  },
   image: {
    
     width: '100%',
     height: 200,
     borderRadius: 20
   },
+  footerContentScrollView:{
+    
+    height: 300,
+  },
+
+  imgCenter:{
+      marginTop: 20,
+      paddingLeft: 10,
+      paddingRight: 20,
+      flexDirection: 'row'
+  },
+  imageScroll:{
+    width: 200,
+    marginLeft: 10,
+    borderRadius: 15,
+
+  },
+
+  TextDescription:{
+    fontFamily: 'Poppins',
+    color: 'white',
+    fontSize: 20,
+    marginLeft: 20,    
+    marginTop: 40,
+    fontWeight: '300'
+  },
+  TextTitle:{
+    fontFamily: 'Poppins',
+    color: 'white',
+    fontSize: 25,
+    marginLeft: 20,    
+    marginTop: 40,
+    fontWeight: '600',
+    textTransform: 'uppercase'
+  }
 });
