@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 import { FaAlignCenter, FaSistrix } from "react-icons/fa";
 import { RiSearch2Line } from "react-icons/ri";
+import axios from 'axios';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -13,12 +14,13 @@ export default function Home() {
   const imgUrl = `https://image.tmdb.org/t/p/w500`;
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1`)
-      .then(result => result.json())
-      .then(data => {
+    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${apikey}&language=en-US&page=1`)
+      .then(result => {
+        setMovies(result.data.results);
         console.log(data.results[0]);
-        setMovies(data.results);
-      });
+      })
+        
+      
   }, []);
 
   const removeStatusBar = () => {
@@ -60,9 +62,9 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <View style={styles.navBar}>
-      
+      {/* 
           <FaAlignCenter style={styles.colorIcon}/>
-          <RiSearch2Line style={styles.colorIcon}/>
+          <RiSearch2Line style={styles.colorIcon}/> */}
         
       </View>
       <Text style={styles.TextTitle}>Movie</Text>
@@ -70,7 +72,7 @@ export default function Home() {
 
       <StatusBar style='light'/>
 
-      <Text style={styles.TextDescription}>Filmes em destaque</Text>
+      <Text style={styles.TextDescription}>Destaque</Text>
       <ScrollView showsHorizontalScrollIndicator={false} 
           horizontal={true} style={styles.footerContentScrollView}>
         <View style={styles.imgCenter}>
@@ -82,6 +84,7 @@ export default function Home() {
       </ScrollView>
 
       <Text style={styles.TextDescription}>Popular</Text>
+      <View>
       <ScrollView showsHorizontalScrollIndicator={false} 
           horizontal={true} style={styles.footerContentScrollView}>
         <View style={styles.imgCenter}>
@@ -91,13 +94,13 @@ export default function Home() {
           ))}
         </View>
       </ScrollView>
-      
+      </View>
       
       <ScrollView >
       
         
         <View >
-        <Text style={styles.TextDescription}>Lançamentos</Text><br/>
+        <Text style={styles.TextDescription}>Lançamentos</Text>
         <View style={styles.content}>
           {movies.map(item => (
             <TouchableOpacity
@@ -122,18 +125,16 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container: { 
     
-    
-    backgroundColor: '#121212',     
+    backgroundColor: '#f9f9f9',     
   },
 
   content:{
     flexDirection: 'row',
     justifyContent: "center",
     flexWrap: 'wrap',
-    marginRight: 9,
-    
+    marginRight: 9, 
     justifyContent: 'space-around',
     
   },
@@ -154,14 +155,13 @@ const styles = StyleSheet.create({
   contentText:{
     textAlign: 'center',
     marginTop: 6,
-    color: '#fff',
-   
+    color: '#121212',
     fontWeight: '600'
   },
 
   colorIcon: {
     fontSize: 20,
-    color: 'white',
+    color: '#121212',
     fontWeight: '800'
 
   },
@@ -177,33 +177,34 @@ const styles = StyleSheet.create({
   },
 
   imgCenter:{
-      marginTop: 20,
+      marginTop: 10,
       paddingLeft: 10,
       paddingRight: 20,
-      flexDirection: 'row'
+      flexDirection: 'row',
   },
+
   imageScroll:{
     width: 200,
     marginLeft: 10,
     borderRadius: 15,
-
+    elevation: 5,
   },
 
   TextDescription:{
-    fontFamily: 'Poppins',
-    color: 'white',
-    fontSize: 20,
+    
+    color: '#121212',
+    fontSize: 15,
     marginLeft: 20,    
-    marginTop: 40,
-    fontWeight: '300'
+    marginTop: 10,
+    fontWeight: '400',
   },
   TextTitle:{
-    fontFamily: 'Poppins',
-    color: 'white',
+    
+    color: '#121212',
     fontSize: 25,
     marginLeft: 20,    
     marginTop: 40,
     fontWeight: '600',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   }
 });

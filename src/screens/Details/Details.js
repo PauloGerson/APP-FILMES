@@ -1,6 +1,7 @@
 
 import { StyleSheet, Text, View, Image, ScrollView, Button } from 'react-native';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 
 export default function Home({ route, navigation }) {
@@ -11,11 +12,10 @@ export default function Home({ route, navigation }) {
   const imgUrl = `https://image.tmdb.org/t/p/w500`;
 
   useEffect(() => {
-    fetch(`https://api.themoviedb.org/3/movie/${itemId}?api_key=${apikey}&language=en-US&page=1`)
-      .then(result => result.json())
-      .then(data => {
-        console.log(data.overview);
-        setMovies(data);
+    axios.get(`https://api.themoviedb.org/3/movie/${itemId}?api_key=${apikey}&language=en-US&page=1`)
+    .then(data => {
+        //console.log(data.data.overview);
+        setMovies(data.data);
       });
   }, []);
   return (
